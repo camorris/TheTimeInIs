@@ -28,8 +28,25 @@ body {
     inset 0 0 0 3px #EFEFEF,
     inset 0 0 10px black,
     0 0 10px rgba(0,0,0,0.2);
+display: none;
 }
 
+.clockShow ,.zoneClockShow{
+  width: 30rem;
+  height: 30rem;
+  border:20px solid white;
+  border-radius:50%;
+  margin:50px auto;
+  position: relative;
+  padding:2rem;
+  box-shadow:
+    0 0 0 4px rgba(0,0,0,0.1),
+    inset 0 0 0 3px #EFEFEF,
+    inset 0 0 10px black,
+    0 0 10px rgba(0,0,0,0.2);
+    
+ 
+}
 
 .clock-face {
   position: relative;
@@ -65,6 +82,9 @@ body {
 .dropdown {
   position: relative;
   display: inline-block;
+  margin-top: -550px;
+  margin-left: 150px;
+ 
 }
 
 .dropdown-content {
@@ -75,6 +95,7 @@ body {
   overflow: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  margin-top: 20px;
 }
 
 .dropdown-content a {
@@ -82,11 +103,9 @@ body {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+ 
 }
 
-.dropdown a:hover .show:hover{
-  background-color: #f1f1f1;
-  display:block;
-}
+.dropdown a:hover {background-color: #f1f1f1;}
 
-/* .show {display:block;} */
+.show {display:block;}

@@ -4,14 +4,32 @@ const hourHand = document.querySelector('.hour-hand');
 const ahourHand = document.querySelector('.a-hour-hand');
 const asecondHand = document.querySelector('.a-second-hand');
 const aminuteHand = document.querySelector('.a-min-hand');
-const bangkok = document.querySelector('[data-timeZone="Asia/Bangkok"]')
-const  dropDown = document.getElementById("myDropdown")
+const bangkok = document.querySelector('[data-timeZone="Asia/Bangkok"]');
+const losAngeles = document.querySelector('[data-timeZone="America/Los_Angeles"]')
+const dropDown = document.querySelector('.dropbtn');
+
 
 
 bangkok.addEventListener('click',function(){
-  var bangkokClock = document.querySelector(".clock")
-  bangkokClock.style.opacity = '0';
+  var bangkokClock = document.getElementById("Asia")
+      if(bangkokClock.style.display !== "none"){
+        bangkokClock.classList.remove("zoneClock")
+        bangkokClock.classList.toggle("zoneClockShow");
+      }
+    
+   
 })
+
+losAngeles.addEventListener('click', function(){
+  const losAngelesClock = document.getElementById("America")
+      if(losAngelesClock.style.display !== "none"){
+        losAngelesClock.classList.remove("clock")
+       losAngelesClock.classList.toggle('clockShow');
+          
+      }
+})
+
+
 function asiaZone(){
   const asia = new moment().tz("Asia/Bangkok")
   
@@ -51,8 +69,8 @@ setInterval(setDate, 1000)
 
 setInterval(asiaZone, 1000)
 
-dropDown.addEventListener('mouseover', function() {
-dropDown.classList.toggle("show");
+dropDown.addEventListener('mouseover',function() {
+  document.getElementById("myDropdown").classList.toggle("show");
 })
 
 window.onclick = function(event) {
