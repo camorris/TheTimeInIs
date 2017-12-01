@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>The Time in ___ is What?></title>
-</head>
+  <script src="moment/moment.min.js"></script>
+  <script src="moment/moment-timezone.min.js"></script>
+  <script src="moment/moment-timezone-with-data.min.js"></script> 
+  <script src="moment/moment-timezone-with-data-2012-2022.min.js"></script>
+  <script src="moment/moment-with-locales.js"></script>
+  <link rel="stylesheet" href="main.css">
+  
+  </head>
 
 <body>
 
@@ -17,229 +24,25 @@
     </div>
 
     <div class="dropdown">
-      <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+      <button class="dropbtn">Dropdown</button>
         <div id="myDropdown" class="dropdown-content">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a data-timezone="America/Los_Angeles">Los Angeles</a>
+          <a data-timezone="America/Toronto">Toronto</a>
+          <a data-timezone="Asia/Bangkok">Bangkok</a>
         </div>
       </div>
 
-      <div class="clockcontainer">
-        
-          <div id="tokyoclock" class="outer_face">
-          
-            <div class="marker oneseven"></div>
-            <div class="marker twoeight"></div>
-            <div class="marker fourten"></div>
-            <div class="marker fiveeleven"></div>
-            
-            
-            <div class="inner_face">
-            
-            <div class="hand hour"></div>
-            <div class="hand minute"></div>
-            <div class="hand second"></div>
-            
-            </div>
-            <div class="ampm"></div>
-            
-            <div class="timenote">Tokyo Time</div>
-          </div>
-          
-          <div id="vanclock" class="outer_face">
-          
-            <div class="marker oneseven"></div>
-            <div class="marker twoeight"></div>
-            <div class="marker fourten"></div>
-            <div class="marker fiveeleven"></div>
-            
-            
-            <div class="inner_face">
-            
-            <div class="hand hour"></div>
-            <div class="hand minute"></div>
-            <div class="hand second"></div>
-            
-            </div>
-            <div class="ampm"></div>
-            
-            <div class="timenote">Vancouver, BC Time</div>
-          </div>
-        
+      <div class="zoneClock">
+        <div class="clock-face">
+          <div class="hand a-hour-hand"></div>
+          <div class="hand a-min-hand"></div>
+          <div class="hand a-second-hand"></div>
         </div>
-  <style>
-      .outer-face{
-        display: flex;
-        border: 1px solid black;
-        border-radius: 20%;
-      }
-      
-      .clockcontainer > div{
-        margin-right: 40px;
-      }
-      
+      </div>
 
-    html {
-      background:#018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
-      background-size:cover;
-      font-family:'helvetica neue';
-      text-align: center;
-      font-size: 10px;
-    }
-
-    body {
-      margin: 0;
-      font-size: 2rem;
-      display:flex;
-      flex:1;
-      min-height: 100vh;
-      align-items: center;
-    }
-
-    .clock {
-      width: 30rem;
-      height: 30rem;
-      border:20px solid white;
-      border-radius:50%;
-      margin:50px auto;
-      position: relative;
-      padding:2rem;
-      box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
-        inset 0 0 0 3px #EFEFEF,
-        inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
-    }
-
-    .clock-face {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
-    }
-
-    .hand {
-      width:50%;
-      height:6px;
-      background:black;
-      position: absolute;
-      top:50%;
-      transform-origin: 100%;
-      transform: rotate(90deg);
-      transition:all 0.05;
-      transition-timing-function: cubic-bezier(0.1,2.7,0.58, 1)
-    }
-    .dropbtn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 16px;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-  }
-  
-  .dropbtn:hover, .dropbtn:focus {
-      background-color: #3e8e41;
-  }
-  
-  .dropdown {
-      position: relative;
-      display: inline-block;
-  }
-  
-  .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f9f9f9;
-      min-width: 160px;
-      overflow: auto;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-  }
-  
-  .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-  }
-  
-  .dropdown a:hover {background-color: #f1f1f1}
-
-  .show {display:block;}
-
-  </style>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ 
   <script src="main.js"></script>
-<script>
-  window.requestAnimationFrame = window.requestAnimationFrame
-  || window.mozRequestAnimationFrame
-  || window.webkitRequestAnimationFrame
-  || window.msRequestAnimationFrame
-  || function(f){return setTimeout(f, 1000/60)}
 
-var apikey = 'AIzaSyB348E5VC53YEchNxKoqKPcpW-z-YwePdw' // enter your Time Zone API key here. Without it the API request may fail in the future
-
-function currentlocalClock(divid, loc){
-var $container = $('#' + divid)
-var $clockhands = $container.find('div.hand')
-var $ampm = $container.find('div.ampm')
-var targetDate = new Date() // Current date/time of user computer
-var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60 // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
-var apicall = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + loc + '&timestamp=' + timestamp + '&key=' + apikey
-this.lastrequestAnimationTime // member property to store when requestAnimationFrame call occured, in milliseconds
-var thisobj = this
-
-var xhr = new XMLHttpRequest() // create new XMLHttpRequest2 object
-xhr.open('GET', apicall) // open GET request
-xhr.onload = function(){
-if (xhr.status === 200){ // if Ajax request successful
-var output = JSON.parse(xhr.responseText) // convert returned JSON string to JSON object
-console.log(output.status) // log API return status for debugging purposes
-if (output.status == 'OK'){ // if API reports everything was returned successfully
-var offsets = output.dstOffset * 1000 + output.rawOffset * 1000 // get DST and time zone offsets in milliseconds
-var localdate = new Date(timestamp * 1000 + offsets) // Date object containing current time of target location
-var refreshDate = new Date() // get current date again to calculate time elapsed between targetDate and now
-var millisecondselapsed = refreshDate - targetDate // get amount of time elapsed between targetDate and now
-localdate.setMilliseconds(localdate.getMilliseconds()+ millisecondselapsed) // update localdate to account for any time elapsed
-thisobj.lastrequestAnimationTime = refreshDate
-requestAnimationFrame(function(){
-thisobj.updateclock($clockhands, localdate)
-})
-setInterval(function(){
-$ampm.html( localdate.getHours() > 12? 'PM' : 'AM')
-}, 1000)
-}
-}
-else{
-alert('Request failed.  Returned status of ' + xhr.status)
-}
-}
-xhr.send() // send request
-}
-
-currentlocalClock.prototype.updateclock = function($hands, livedate){
-var thisobj = this
-var refreshDate = new Date()
-var millisecondselapsed = refreshDate - thisobj.lastrequestAnimationTime
-livedate.setMilliseconds(livedate.getMilliseconds() + millisecondselapsed)
-var hour_as_degree = ( livedate.getHours() + livedate.getMinutes()/60 ) / 12 * 360
-var minute_as_degree = livedate.getMinutes() / 60 * 360
-var second_as_degree = ( livedate.getSeconds() + livedate.getMilliseconds()/1000 ) /60 * 360
-$hands.filter('.hour').css({transform: 'rotate(' + hour_as_degree + 'deg)' })
-$hands.filter('.minute').css({transform: 'rotate(' + minute_as_degree + 'deg)' })
-$hands.filter('.second').css({transform: 'rotate(' + second_as_degree + 'deg)' })
-thisobj.lastrequestAnimationTime = refreshDate
-requestAnimationFrame(function(){
-thisobj.updateclock($hands, livedate)
-})
-}
-
-
-new currentlocalClock('tokyoclock', '35.731252, 139.730291')
-new currentlocalClock('vanclock', '49.282764, -123.118756')
-</script>
 
 </body>
 </html>
