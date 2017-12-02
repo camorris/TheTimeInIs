@@ -87,4 +87,3 @@ if (!event.target.matches('.dropbtn')) {
 }
 }
 
-console.log(Date())
