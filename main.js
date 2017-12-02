@@ -4,8 +4,12 @@ const hourHand = document.querySelector('.hour-hand');
 const ahourHand = document.querySelector('.a-hour-hand');
 const asecondHand = document.querySelector('.a-second-hand');
 const aminuteHand = document.querySelector('.a-min-hand');
+const thourHand = document.querySelector('.t-hour-hand');
+const tsecondHand = document.querySelector('.t-second-hand');
+const tminuteHand = document.querySelector('.t-min-hand');
 const bangkok = document.querySelector('[data-timeZone="Asia/Bangkok"]');
 const losAngeles = document.querySelector('[data-timeZone="America/Los_Angeles"]')
+const toronto = document.querySelector('[data-timeZone="America/Toronto"]')
 const dropDown = document.querySelector('.dropbtn');
 
 
@@ -13,11 +17,19 @@ const dropDown = document.querySelector('.dropbtn');
 bangkok.addEventListener('click',function(){
   var bangkokClock = document.getElementById("Asia")
       if(bangkokClock.style.display !== "none"){
-        bangkokClock.classList.remove("zoneClock")
-        bangkokClock.classList.toggle("zoneClockShow");
+        bangkokClock.classList.remove("asiaClock")
+        bangkokClock.classList.toggle("asiaClockShow");
       }
     
    
+})
+toronto.addEventListener('click', function(){
+  const torontoClock = document.getElementById("Canada")
+      if(torontoClock.style.display !== "none"){
+        torontoClock.classList.remove("canadaClock")
+       torontoClock.classList.toggle('canadaClockShow');
+          
+      }
 })
 
 losAngeles.addEventListener('click', function(){
@@ -48,6 +60,23 @@ function asiaZone(){
   
 }
 
+function canadaZone(){
+  const toronto = new moment().tz("America/Toronto")
+  
+  const seconds = toronto.seconds();
+  const secondsDegrees = ((seconds/60) * 360) + 90;
+  tsecondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+  const mins = toronto.minutes();
+  const minsDegrees = ((mins/60) * 360) + ((seconds/60)*6)+90;
+  tminuteHand.style.transform = `rotate(${minsDegrees}deg)`;
+
+  const hour = toronto.hour();
+  const hourDegrees = ((hour/12)*360) + ((mins/60)*30) + 90 ;
+  thourHand.style.transform = `rotate(${hourDegrees}deg)`;
+
+  
+}
 
 function setDate(){
   const now = new Date();
@@ -66,8 +95,9 @@ function setDate(){
 
 }
 setInterval(setDate, 1000)
-
+setInterval(canadaZone, 1000)
 setInterval(asiaZone, 1000)
+
 
 dropDown.addEventListener('mouseover',function() {
   document.getElementById("myDropdown").classList.toggle("show");
